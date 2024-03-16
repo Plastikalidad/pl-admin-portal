@@ -1,0 +1,12 @@
+@if(generalService.toast().show) {
+<div class="toast toast-top toast-start w-full">
+  <div class="alert {{generalService.toast().type}} flex justify-between">
+    <div>
+      <span>{{generalService.toast().message}}</span>
+    </div>
+    <div class="float-right">
+      <button (click)="close()">Close</button>
+    </div>
+  </div>
+</div>
+}

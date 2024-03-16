@@ -1,0 +1,78 @@
+<dialog #dialogModal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Add product</h3>
+    <div class="modal-content" [formGroup]="form">
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Code</span>
+        </div>
+        <input formControlName="code" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Design</span>
+        </div>
+        <input formControlName="design" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Size</span>
+        </div>
+        <input formControlName="size" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Cap Colors</span>
+        </div>
+        <input formControlName="capColors" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Regular Price Per Bundle</span>
+        </div>
+        <input formControlName="regPricePerBundle" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Quantity Per Bundle</span>
+        </div>
+        <input formControlName="qtyPerBundle" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Selling Price Per Piece</span>
+        </div>
+        <input formControlName="sellingPricePerPiece" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Selling Price Per 50</span>
+        </div>
+        <input formControlName="sellingPricePer50" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Selling Price Per 100</span>
+        </div>
+        <input formControlName="sellingPricePer100" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Selling Price Per 500</span>
+        </div>
+        <input formControlName="sellingPricePer500" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Stocks</span>
+        </div>
+        <input formControlName="availableStocks" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+    </div>
+    <div class="modal-action">
+      <!-- if there is a button in form, it will close the modal -->
+      <button class="btn btn-outline" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-accent" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</dialog>

@@ -1,1 +1,6 @@
-<p>products-overview works!</p>
+<div class="flex justify-between">
+  <app-search></app-search>
+  <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
+</div>
+<app-table [items]="(items$ | async) || []" [columns]="columns" [keys]="keys" [actions]="tableActions"></app-table>
+<app-add-product #addProduct></app-add-product>
