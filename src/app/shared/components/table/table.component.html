@@ -1,0 +1,66 @@
+<div class="table-container">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>
+          <label>
+            <input type="checkbox" class="checkbox" />
+          </label>
+        </th>
+        @for(column of columns; track column) {
+        <th>
+          <b>
+            {{column}}
+          </b>
+        </th>
+        }
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      @for( data of paginate(items); track data) {
+      <tr>
+        <th>
+          <label>
+            <input type="checkbox" class="checkbox" />
+          </label>
+        </th>
+
+        @for(key of keys; track key) {
+        <td>{{data[key]}}</td>
+        }
+
+        <th>
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-outline m-1">Action</div>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+              @for(data of actions; track data) {
+              <li (click)="onActionClick(data)"><a>{{data}}</a></li>
+              }
+            </ul>
+          </div>
+        </th>
+      </tr>
+      }
+    </tbody>
+
+  </table>
+  <div class="flex justify-center mt-3">
+    <div class="join">
+      <button class="join-item btn" (click)="pageNumber = pageNumber - 1" [disabled]="pageNumber === 1">«</button>
+      <button class="join-item btn">Page {{pageNumber}}</button>
+      <button class="join-item btn" (click)="pageNumber = pageNumber + 1"
+        [disabled]="!checkPaginate(items).length">»</button>
+    </div>
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-link">items: {{itemsPerPage}}</div>
+      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li (click)="itemsPerPage = 5; pageNumber = 1"><a>5</a></li>
+        <li (click)="itemsPerPage = 10; pageNumber = 1"><a>10</a></li>
+        <li (click)="itemsPerPage = 15; pageNumber = 1"><a>15</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
