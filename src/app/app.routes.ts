@@ -14,6 +14,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/products/products-overview/products-overview.component').then(c => c.ProductsOverviewComponent)
   },
   {
+    path: 'manage-inventory/:code',
+    loadComponent: () => import('./pages/products/products-detail/products-detail.component').then(c => c.ProductsDetailComponent)
+  },
+  {
     path: 'available-stocks',
     loadComponent: () => import('./pages/stocks/available-stocks/available-stocks-overview/available-stocks-overview.component').then(c => c.AvailableStocksOverviewComponent)
   },

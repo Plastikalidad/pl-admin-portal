@@ -5,7 +5,7 @@
       <tr>
         <th>
           <label>
-            <input type="checkbox" class="checkbox" />
+            <input type="checkbox" class="checkbox" (change)="onCheck( $event, 'all')" />
           </label>
         </th>
         @for(column of columns; track column) {
@@ -24,7 +24,7 @@
       <tr>
         <th>
           <label>
-            <input type="checkbox" class="checkbox" />
+            <input #checkbox type="checkbox" class="checkbox" (change)="onCheck($event, data)" />
           </label>
         </th>
 
@@ -36,8 +36,8 @@
           <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-outline m-1">Action</div>
             <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-              @for(data of actions; track data) {
-              <li (click)="onActionClick(data)"><a>{{data}}</a></li>
+              @for(action of actions; track action) {
+              <li (click)="onActionClick(action, data)"><a>{{action}}</a></li>
               }
             </ul>
           </div>

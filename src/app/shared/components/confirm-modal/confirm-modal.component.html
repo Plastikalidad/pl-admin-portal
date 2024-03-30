@@ -1,0 +1,13 @@
+<dialog #modal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">{{title}}</h3>
+    <div class="modal-content">
+      {{message}}
+    </div>
+    <div class="modal-action">
+      <!-- if there is a button in form, it will close the modal -->
+      <button class="btn btn-outline" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-accent" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</dialog>

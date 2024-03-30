@@ -1,4 +1,5 @@
 export interface Product {
+  key: string;
   code: string;
   design: string;
   size: string;

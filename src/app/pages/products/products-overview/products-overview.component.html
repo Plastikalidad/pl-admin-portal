@@ -1,6 +1,9 @@
 <div class="flex justify-between">
-  <app-search></app-search>
+  <app-search (emitSearch$)="filterProducts($event)"></app-search>
   <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
 </div>
-<app-table [items]="(items$ | async) || []" [columns]="columns" [keys]="keys" [actions]="tableActions"></app-table>
+<app-table [items]="(items$ | async) || []" [columns]="columns" [keys]="keys" [actions]="tableActions"
+  (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
 <app-add-product #addProduct></app-add-product>
+<app-confirm-modal #confirmDeleteModal (emitSubmit$)="deleteProduct()"></app-confirm-modal>
+<app-confirm-modal #confirmDeleteAllModal (emitSubmit$)="deleteAllProduct()"></app-confirm-modal>

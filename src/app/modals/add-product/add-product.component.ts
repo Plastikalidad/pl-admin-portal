@@ -38,15 +38,19 @@ export class AddProductComponent {
     this.dialogModal?.nativeElement.showModal()
   }
 
-  public onSubmit() {
+  public async onSubmit() {
     if (!this.form.valid) {
       this.form.markAsDirty();
       return;
     }
-    this.productService.addProduct(this.form.value);
-    this.form.reset();
-    this.generalService.toast.set({ show: true, message: 'Product successfully added', type: 'alert-success' });
-    (this.dialogModal?.nativeElement as HTMLDialogElement).close()
+    try {
+      await this.productService.addProduct(this.form.value);
+      this.form.reset();
+      this.generalService.toast.set({ show: true, message: 'Product successfully added', type: 'alert-success' });
+      (this.dialogModal?.nativeElement as HTMLDialogElement).close()
+    } catch (e) {
+      (this.dialogModal?.nativeElement as HTMLDialogElement).close()
+    }
 
   }
 
