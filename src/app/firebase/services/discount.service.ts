@@ -17,7 +17,7 @@ export class DiscountService {
         map((changes) => {
           return changes
             .map((c) => {
-              const discount = ({ key: c.payload.key, ...c.payload.toJSON() } as Discount)
+              const discount = ({ ...c.payload.toJSON(), key: c.payload.key } as Discount)
               return discount;
             })
         }),

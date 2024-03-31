@@ -12,6 +12,7 @@ export class TableComponent<T> {
   @Input() columns: string[] = [];
   @Input() keys: Array<keyof T> = [];
   @Input() actions: string[] = [];
+  @Input() showCheckboxColumn = true;
   @Output() onCheck$ = new EventEmitter<{ value: boolean, data: 'all' | T }>();
   @Output() emitAction$ = new EventEmitter<{ action: string, item: T }>();
   @ViewChildren('checkbox')

@@ -1,1 +1,108 @@
-<p>restock-history-detail works!</p>
+<div class="card card-side bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h3 class="font-bold text-lg">Update Restock</h3>
+    <div class="modal-content" [formGroup]="form">
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Date</span>
+        </div>
+        <input formControlName="date" type="date" placeholder="" class="input input-bordered w-full " />
+      </label>
+
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Code</span>
+        </div>
+        <input formControlName="code" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <ng-container formArrayName="products">
+
+        @for(product of getProducts().controls; track getProducts(); let idx = $index) {
+        <div class="card card-side bg-base-100 shadow-xl mt-2 mb-5">
+          <div class="card-body">
+            <ng-container [formGroupName]="idx">
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Code</span>
+                </div>
+                <select formControlName="code" type="text" class="input input-bordered w-full"
+                  (change)="onChangeCode(idx)">
+                  <option value=""></option>
+                  @for(product of (products | async); track product.code) {
+                  <option [value]="product.code">{{product.code}}</option>
+                  }
+                </select>
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Size</span>
+                </div>
+                <select formControlName="size" type="text" class="input input-bordered w-full ">
+                  <option value=""></option>
+                  @for(size of (sizes | async); track size.code) {
+                  <option [value]="size.value">{{size.value}}</option>
+                  }
+                </select>
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Design</span>
+                </div>
+                <input formControlName="design" type="text" placeholder="" class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Available Stocks</span>
+                </div>
+                <input formControlName="availableStocks" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Regular Price Per Bundle</span>
+                </div>
+                <input formControlName="regPricePerBundle" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">New Stock Quantity</span>
+                </div>
+                <input formControlName="addStock" type="text" placeholder="" class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Total Price</span>
+                </div>
+                <input formControlName="totalPrice" type="text" placeholder="" class="input input-bordered w-full " />
+              </label>
+            </ng-container>
+          </div>
+        </div>
+        }
+      </ng-container>
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <h3 class="font-bold text-lg">Notes</h3>
+          <label class="form-control w-full ">
+
+            <input formControlName="notes" type="text" placeholder="" class="input input-bordered w-full " />
+          </label>
+        </div>
+      </div>
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <h3 class="font-bold text-lg">Total Price</h3>
+          <label class="form-control w-full ">
+
+            <input formControlName="totalPrice" type="text" placeholder="" class="input input-bordered w-full " />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="card-actions justify-end">
+      <button class="btn btn-outline" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-accent" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

@@ -17,14 +17,14 @@ export class RestockService {
         map((changes) => {
           return changes
             .map((c) => {
-              const restock = ({ key: c.payload.key, ...c.payload.toJSON() } as Restock)
+              const restock = ({ ...c.payload.toJSON(), key: c.payload.key } as Restock)
               return restock;
             })
         }),
 
       ).pipe(
         map(items =>
-          searchItem ? items.filter(item => item.id.includes(searchItem as string)) : items
+          searchItem ? items.filter(item => item.code.includes(searchItem as string)) : items
         )
       )
 
@@ -36,7 +36,7 @@ export class RestockService {
         map((changes) => {
           return changes
             .map((c) => {
-              const restock = ({ key: c.payload.key, ...c.payload.toJSON() } as Restock)
+              const restock = ({ ...c.payload.toJSON(), key: c.payload.key, } as Restock)
               return restock;
             })
         }),

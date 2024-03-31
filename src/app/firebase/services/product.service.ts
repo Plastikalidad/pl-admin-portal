@@ -18,7 +18,7 @@ export class ProductService {
         map((changes) => {
           return changes
             .map((c) => {
-              const product = ({ key: c.payload.key, ...c.payload.toJSON() } as Product)
+              const product = ({ ...c.payload.toJSON(), key: c.payload.key } as Product)
               return product;
             })
         }),
@@ -37,7 +37,7 @@ export class ProductService {
         map((changes) => {
           return changes
             .map((c) => {
-              const product = ({ key: c.payload.key, ...c.payload.toJSON() } as Product)
+              const product = ({ ...c.payload.toJSON(), key: c.payload.key } as Product)
               return product;
             })
         }),
