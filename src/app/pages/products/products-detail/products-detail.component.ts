@@ -5,11 +5,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ValidatorsService } from '../../../shared/utils/validators.service';
 import { GeneralService } from '../../../states/general.service';
 import { Product } from '../../../shared/interfaces/product.interface';
+import { CapColorService } from '../../../firebase/services/cap-color.service';
+import { SizeService } from '../../../firebase/services/size.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products-detail',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './products-detail.component.html',
   styleUrl: './products-detail.component.scss'
 })
@@ -18,10 +21,16 @@ export class ProductsDetailComponent implements OnInit {
   public fb = inject(FormBuilder);
   public productService = inject(ProductService);
   public generalService = inject(GeneralService);
+  public capColorService = inject(CapColorService);
+  public sizeService = inject(SizeService);
+  public validatorsService = inject(ValidatorsService);
+
   public router = inject(Router);
   public name = this.activatedRoute.snapshot.params['code'];
   public product = this.productService.getProduct(this.name);
-  public validatorsService = inject(ValidatorsService);
+
+  public capColors = this.capColorService.getCapColors();
+  public sizes = this.sizeService.getSizes();
 
   public form: FormGroup = this.fb.group({
     key: [''],

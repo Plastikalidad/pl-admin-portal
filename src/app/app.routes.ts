@@ -6,8 +6,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/dashboard/dashboard.component').then(c => c.DashboardComponent)
   },
   {
-    path: '',
+    path: 'profile',
     loadComponent: () => import('./pages/profile/profile.component').then(c => c.ProfileComponent)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.component').then(c => c.SettingsComponent)
   },
   {
     path: 'manage-inventory',

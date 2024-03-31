@@ -3,11 +3,14 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { GeneralService } from '../../states/general.service';
 import { ProductService } from '../../firebase/services/product.service';
 import { ValidatorsService } from '../../shared/utils/validators.service';
+import { CapColorService } from '../../firebase/services/cap-color.service';
+import { SizeService } from '../../firebase/services/size.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss'
 })
@@ -16,7 +19,12 @@ export class AddProductComponent {
   public fb = inject(FormBuilder);
   public generalService = inject(GeneralService);
   public productService = inject(ProductService);
+  public capColorService = inject(CapColorService);
+  public sizeService = inject(SizeService);
   public validatorsService = inject(ValidatorsService);
+
+  public capColors = this.capColorService.getCapColors();
+  public sizes = this.sizeService.getSizes();
 
   public form: FormGroup = this.fb.group({
     code: ['', [Validators.required]],
