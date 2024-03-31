@@ -1,0 +1,24 @@
+<dialog #dialogModal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Add Size</h3>
+    <div class="modal-content" [formGroup]="form">
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Code</span>
+        </div>
+        <input formControlName="code" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Value</span>
+        </div>
+        <input formControlName="value" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+    </div>
+    <div class="modal-action">
+      <!-- if there is a button in form, it will close the modal -->
+      <button class="btn btn-outline" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-accent" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</dialog>

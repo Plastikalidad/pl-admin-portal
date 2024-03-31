@@ -16,6 +16,9 @@ export class GeneralService {
         if (e.url.includes('/manage-inventory')) {
           this.pageTitle.set('Manage Inventory');
         }
+        if (e.url.includes('/settings')) {
+          this.pageTitle.set('Settings');
+        }
       }
     });
   }

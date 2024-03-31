@@ -18,13 +18,21 @@
         <div class="label">
           <span class="label-text">Size</span>
         </div>
-        <input formControlName="size" type="text" placeholder="" class="input input-bordered w-full " />
+        <select formControlName="size" type="text" class="input input-bordered w-full ">
+          @for(size of (sizes | async); track size.code) {
+          <option value="size.name">{{size.value}}</option>
+          }
+        </select>
       </label>
       <label class="form-control w-full ">
         <div class="label">
           <span class="label-text">Cap Colors</span>
         </div>
-        <input formControlName="capColors" type="text" placeholder="" class="input input-bordered w-full " />
+        <select formControlName="capColors" type="text" class="input input-bordered w-full ">
+          @for(color of (capColors | async); track color.code) {
+          <option value="color.name">{{color.value}}</option>
+          }
+        </select>
       </label>
       <label class="form-control w-full ">
         <div class="label">
