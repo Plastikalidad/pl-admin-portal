@@ -11,6 +11,7 @@ import { routes } from './app.routes';
 import { provideAuth0 } from '@auth0/auth0-angular';
 import { environment } from '../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,7 +31,7 @@ export const appConfig: ApplicationConfig = {
       provideMessaging(() => getMessaging()),
       providePerformance(() => getPerformance()),
       provideStorage(() => getStorage()),
-    ])
+    ]), provideAnimationsAsync('animations')
 
   ]
 };

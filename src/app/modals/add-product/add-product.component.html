@@ -20,7 +20,7 @@
         </div>
         <select formControlName="size" type="text" class="input input-bordered w-full ">
           @for(size of (sizes | async); track size.code) {
-          <option value="size.name">{{size.value}}</option>
+          <option [value]="size.value">{{size.value}}</option>
           }
         </select>
       </label>
@@ -30,7 +30,7 @@
         </div>
         <select formControlName="capColors" type="text" class="input input-bordered w-full ">
           @for(color of (capColors | async); track color.code) {
-          <option value="color.name">{{color.value}}</option>
+          <option [value]="color.value">{{color.value}}</option>
           }
         </select>
       </label>
