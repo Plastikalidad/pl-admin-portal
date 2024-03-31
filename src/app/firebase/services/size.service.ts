@@ -17,7 +17,7 @@ export class SizeService {
         map((changes) => {
           return changes
             .map((c) => {
-              const sizes = ({ key: c.payload.key, ...c.payload.toJSON() } as Size)
+              const sizes = ({ ...c.payload.toJSON(), key: c.payload.key } as Size)
               return sizes;
             })
         }),

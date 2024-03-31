@@ -3,11 +3,13 @@
     <!-- head -->
     <thead>
       <tr>
+        @if(showCheckboxColumn) {
         <th>
           <label>
             <input type="checkbox" class="checkbox" (change)="onCheck( $event, 'all')" />
           </label>
         </th>
+        }
         @for(column of columns; track column) {
         <th>
           <b>
@@ -22,14 +24,17 @@
       <!-- row 1 -->
       @for( data of paginate(items); track data) {
       <tr>
+        @if(showCheckboxColumn) {
         <th>
           <label>
             <input #checkbox type="checkbox" class="checkbox" (change)="onCheck($event, data)" />
           </label>
         </th>
+        }
 
         @for(key of keys; track key) {
         <td>{{data[key]}}</td>
+
         }
 
         <th>

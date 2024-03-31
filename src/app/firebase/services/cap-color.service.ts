@@ -18,7 +18,7 @@ export class CapColorService {
         map((changes) => {
           return changes
             .map((c) => {
-              const capcolor = ({ key: c.payload.key, ...c.payload.toJSON() } as CapColor)
+              const capcolor = ({ ...c.payload.toJSON(), key: c.payload.key } as CapColor)
               return capcolor;
             })
         }),

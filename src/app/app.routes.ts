@@ -28,5 +28,9 @@ export const routes: Routes = [
   {
     path: 'restock-history',
     loadComponent: () => import('./pages/stocks/restock-history/restock-history-overview/restock-history-overview.component').then(c => c.RestockHistoryOverviewComponent)
+  },
+  {
+    path: 'restock-history/:code',
+    loadComponent: () => import('./pages/stocks/restock-history/restock-history-detail/restock-history-detail.component').then(c => c.RestockHistoryDetailComponent)
   }
 ];
