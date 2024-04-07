@@ -1,0 +1,201 @@
+<dialog #dialogModal class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Add Restock</h3>
+    <div class="modal-content" [formGroup]="form">
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Date</span>
+        </div>
+        <input formControlName="date" type="date" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <div class="card card-side bg-base-100 shadow-xl mt-2 mb-5">
+        <div class="card-body">
+          <ng-container formGroupName="customer">
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">Code</span>
+              </div>
+              <select formControlName="code" type="text" class="input input-bordered w-full"
+                (change)="onChangeCustomerCode()">
+                <option value=""></option>
+                @for(customer of (customers | async); track customer.code) {
+                <option [value]="customer.code">{{customer.firstName}} {{customer.lastName}}</option>
+                }
+              </select>
+            </label>
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">First Name</span>
+              </div>
+              <input formControlName="firstName" type="text" placeholder="" class="input input-bordered w-full " />
+            </label>
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">Last Name</span>
+              </div>
+              <input formControlName="lastName" type="text" placeholder="" class="input input-bordered w-full " />
+            </label>
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">Contact Number</span>
+              </div>
+              <input formControlName="contactNumber" type="text" placeholder="" class="input input-bordered w-full " />
+            </label>
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">Address</span>
+              </div>
+              <input formControlName="address" type="text" placeholder="" class="input input-bordered w-full " />
+            </label>
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">Mode of Delivery</span>
+              </div>
+              <input formControlName="modeOfDelivery" type="text" placeholder="" class="input input-bordered w-full " />
+            </label>
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">Mode of Payment</span>
+              </div>
+              <input formControlName="modeOfPayment" type="text" placeholder="" class="input input-bordered w-full " />
+            </label>
+            <label class="form-control w-full ">
+              <div class="label">
+                <span class="label-text">Ordered From</span>
+              </div>
+              <input formControlName="orderedFrom" type="text" placeholder="" class="input input-bordered w-full " />
+            </label>
+          </ng-container>
+        </div>
+      </div>
+
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Code</span>
+        </div>
+        <input formControlName="code" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <ng-container formArrayName="products">
+
+        @for(product of getProducts().controls; track getProducts(); let idx = $index) {
+        <div class="card card-side bg-base-100 shadow-xl mt-2 mb-5">
+          <div class="card-body">
+            <ng-container [formGroupName]="idx">
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Code</span>
+                </div>
+                <select formControlName="code" type="text" class="input input-bordered w-full"
+                  (change)="onChangeCode(idx)">
+                  <option value=""></option>
+                  @for(product of (products | async); track product.code) {
+                  <option [value]="product.code">{{product.code}}</option>
+                  }
+                </select>
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Size</span>
+                </div>
+                <select formControlName="size" type="text" class="input input-bordered w-full ">
+                  <option value=""></option>
+                  @for(size of (sizes | async); track size.code) {
+                  <option [value]="size.value">{{size.value}}</option>
+                  }
+                </select>
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Design</span>
+                </div>
+                <input formControlName="design" type="text" placeholder="" class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Available Stocks</span>
+                </div>
+                <input formControlName="availableStocks" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Selling Price Per 50</span>
+                </div>
+                <input formControlName="sellingPricePer50" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Selling Price Per 100</span>
+                </div>
+                <input formControlName="sellingPricePer100" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Selling Price Per 500</span>
+                </div>
+                <input formControlName="sellingPricePer500" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Stocks</span>
+                </div>
+                <input formControlName="availableStocks" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Quantity to Buy</span>
+                </div>
+                <input formControlName="quantity" (keyup)="computeProductPrice(idx)" type="text" placeholder=""
+                  class="input input-bordered w-full " />
+              </label>
+              <label class="form-control w-full ">
+                <div class="label">
+                  <span class="label-text">Total Price</span>
+                </div>
+                <input formControlName="totalPrice" type="text" placeholder="" class="input input-bordered w-full " />
+              </label>
+              <div class="modal-action">
+                <!-- if there is a button in form, it will close the modal -->
+                @if(getProducts().controls.length > 1) {
+                <button class="btn btn-outline" (click)="deleteProduct(idx)">Delete</button>
+                }
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        }
+      </ng-container>
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <label class="form-control w-full ">
+            <div class="label">
+              <span class="label-text">Notes</span>
+            </div>
+            <input formControlName="notes" type="text" placeholder="" class="input input-bordered w-full " />
+          </label>
+        </div>
+      </div>
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <h3 class="font-bold text-lg">Total Price</h3>
+          <label class="form-control w-full ">
+
+            <input formControlName="totalPrice" type="text" placeholder="" class="input input-bordered w-full " />
+          </label>
+        </div>
+      </div>
+
+      <button class="btn btn-accent" (click)="addProduct()">Add Product</button>
+
+    </div>
+    <div class="modal-action">
+      <!-- if there is a button in form, it will close the modal -->
+      <button class="btn btn-outline" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-accent" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</dialog>

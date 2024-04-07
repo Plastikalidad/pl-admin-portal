@@ -52,7 +52,7 @@ export class AddProductComponent {
       return;
     }
     try {
-      await this.productService.addProduct(this.form.value);
+      await this.productService.addProduct(this.form.getRawValue());
       this.form.reset();
       this.generalService.toast.set({ show: true, message: 'Product successfully added', type: 'alert-success' });
       (this.dialogModal?.nativeElement as HTMLDialogElement).close()

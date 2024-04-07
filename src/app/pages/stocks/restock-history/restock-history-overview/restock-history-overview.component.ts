@@ -56,7 +56,6 @@ export class RestockHistoryOverviewComponent {
   public async confirmRestock() {
     try {
       if (this.confirmedRestock) {
-        console.log(this.confirmedRestock)
         const stock: Restock = { ...this.confirmedRestock, status: 'Confirmed' };
         await this.restockService.updateRestock(stock);
         this.addStocksToProducts();
