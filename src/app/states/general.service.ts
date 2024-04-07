@@ -25,6 +25,21 @@ export class GeneralService {
         if (e.url.includes('/available-stocks')) {
           this.pageTitle.set('Available Stocks');
         }
+        if (e.url.includes('/reserved-orders')) {
+          this.pageTitle.set('Reserved Orders');
+        }
+        if (e.url.includes('/completed-orders')) {
+          this.pageTitle.set('Completed Orders');
+        }
+        if (e.url.includes('/order-queue')) {
+          this.pageTitle.set('Order Queue');
+        }
+        if (e.url.includes('/cancelled-orders')) {
+          this.pageTitle.set('Cancelled Orders');
+        }
+        if (e.url.includes('/customer-directory')) {
+          this.pageTitle.set('Customer Directory');
+        }
         if (e.url.includes('/settings')) {
           this.pageTitle.set('Settings');
         }
