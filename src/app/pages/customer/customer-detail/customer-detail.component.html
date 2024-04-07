@@ -1,0 +1,59 @@
+<div class="card card-side bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">Product: {{name}}</h2>
+    <div class="modal-content" [formGroup]="form">
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Code</span>
+        </div>
+        <input formControlName="code" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">First Name</span>
+        </div>
+        <input formControlName="firstName" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Last Name</span>
+        </div>
+        <input formControlName="lastName" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Contact Number</span>
+        </div>
+        <input formControlName="contactNumber" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Address</span>
+        </div>
+        <input formControlName="address" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Mode of Delivery</span>
+        </div>
+        <input formControlName="modeOfDelivery" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Mode of Payment</span>
+        </div>
+        <input formControlName="modeOfPayment" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+      <label class="form-control w-full ">
+        <div class="label">
+          <span class="label-text">Ordered From</span>
+        </div>
+        <input formControlName="orderedFrom" type="text" placeholder="" class="input input-bordered w-full " />
+      </label>
+    </div>
+    <div class="card-actions justify-end">
+      <button class="btn btn-outline" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-accent" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

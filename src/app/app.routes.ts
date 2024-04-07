@@ -32,5 +32,45 @@ export const routes: Routes = [
   {
     path: 'restock-history/:code',
     loadComponent: () => import('./pages/stocks/restock-history/restock-history-detail/restock-history-detail.component').then(c => c.RestockHistoryDetailComponent)
+  },
+  {
+    path: 'customer-directory',
+    loadComponent: () => import('./pages/customer/customer-overview/customer-overview.component').then(c => c.CustomerOverviewComponent)
+  },
+  {
+    path: 'customer-directory/:code',
+    loadComponent: () => import('./pages/customer/customer-detail/customer-detail.component').then(c => c.CustomerDetailComponent)
+  },
+  {
+    path: 'reserved-orders',
+    loadComponent: () => import('./pages/orders/order-overview/order-overview.component').then(c => c.OrderOverviewComponent)
+  },
+  {
+    path: 'completed-orders',
+    loadComponent: () => import('./pages/orders/order-overview/order-overview.component').then(c => c.OrderOverviewComponent)
+  },
+  {
+    path: 'cancelled-orders',
+    loadComponent: () => import('./pages/orders/order-overview/order-overview.component').then(c => c.OrderOverviewComponent)
+  },
+  {
+    path: 'order-queue',
+    loadComponent: () => import('./pages/orders/order-overview/order-overview.component').then(c => c.OrderOverviewComponent)
+  },
+  {
+    path: 'reserved-orders/:code',
+    loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
+  },
+  {
+    path: 'completed-orders/:code',
+    loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
+  },
+  {
+    path: 'cancelled-orders/:code',
+    loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
+  },
+  {
+    path: 'order-queue/:code',
+    loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
   }
 ];

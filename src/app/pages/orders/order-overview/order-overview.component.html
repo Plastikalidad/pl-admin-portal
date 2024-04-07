@@ -1,0 +1,14 @@
+<div class="card card-side bg-base-100 shadow-xl mb-10">
+  <div class="card-body">
+    <div class="flex justify-between">
+      <app-search (emitSearch$)="filterOrders($event)"></app-search>
+      @if(actions.length) {
+      <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
+      }
+    </div>
+    <app-table [showCheckboxColumn]="false" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
+      [actions]="tableActions" (emitAction$)="executeTableAction($event)"></app-table>
+    <app-add-order #addOrder></app-add-order>
+    <app-confirm-modal #confirmUpdateStatusModal (emitSubmit$)="updateStatus()"></app-confirm-modal>
+  </div>
+</div>

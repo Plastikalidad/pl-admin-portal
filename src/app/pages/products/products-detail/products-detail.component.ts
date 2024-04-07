@@ -60,7 +60,7 @@ export class ProductsDetailComponent implements OnInit {
       return;
     }
     try {
-      await this.productService.updateProduct(this.form.value);
+      await this.productService.updateProduct(this.form.getRawValue());
       this.generalService.toast.set({ show: true, message: 'Product successfully updated', type: 'alert-success' });
     } catch (e) {
     }
