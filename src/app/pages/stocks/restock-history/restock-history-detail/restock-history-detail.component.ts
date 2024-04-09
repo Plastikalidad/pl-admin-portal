@@ -76,7 +76,7 @@ export class RestockHistoryDetailComponent implements OnInit {
       availableStocks: [{ value: '', disabled: true }, Validators.required],
       regPricePerBundle: [{ value: '', disabled: true }, Validators.required],
       qtyPerBundle: [{ value: '', disabled: true }, Validators.required],
-      addStock: [{ value: '', disabled: true }, Validators.required],
+      addStock: ['', Validators.required],
       totalPrice: [{ value: '', disabled: true }, Validators.required],
     })
   }
@@ -117,6 +117,40 @@ export class RestockHistoryDetailComponent implements OnInit {
     } catch (e) {
     }
 
+  }
+
+  public computeProductPrice(index: number) {
+    const regPricePerBundle = (this.form.get('products') as FormArray).get(index.toString())?.get('regPricePerBundle')?.getRawValue();
+    const qtyPerBundle = (this.form.get('products') as FormArray).get(index.toString())?.get('qtyPerBundle')?.getRawValue();
+    const addStock = (this.form.get('products') as FormArray).get(index.toString())?.get('addStock')?.value;
+    const price = (regPricePerBundle / qtyPerBundle) * addStock;
+    (this.form.get('products') as FormArray).get(index.toString())?.get('totalPrice')?.setValue(price);
+    this.totalPrice();
+
+  }
+
+  public totalPrice() {
+    let totalPrice = 0
+    for (let product of this.getProducts().controls) {
+      totalPrice += product.get('totalPrice')?.getRawValue();
+    }
+    this.form.get('totalPrice')?.setValue(this.computeDiscount(totalPrice));
+    this.computeDiscount(totalPrice);
+  }
+
+  public computeDiscount(totalPrice: number) {
+    const discountUsed = this.discounts.find(discount => discount.fromPrice <= totalPrice && discount.toPrice >= totalPrice);
+    if (discountUsed) {
+      if (discountUsed.discountOne)
+        totalPrice = totalPrice - (totalPrice * (discountUsed.discountOne * .01))
+      if (discountUsed.discountTwo)
+        totalPrice = totalPrice - (totalPrice * (discountUsed.discountTwo * .01))
+      if (discountUsed.discountThree)
+        totalPrice = totalPrice - (totalPrice * (discountUsed.discountThree * .01))
+      if (discountUsed.discountFour)
+        totalPrice = totalPrice - (totalPrice * (discountUsed.discountFour * .01))
+    }
+    return totalPrice.toFixed(2);
   }
 
   public onCancel() {

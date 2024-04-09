@@ -26,6 +26,14 @@ export const MenuItems: Menu[] = [
       name: 'Available Stocks',
       path: 'available-stocks',
       children: []
+    }, {
+      name: 'Stock Adjustments',
+      path: 'stock-adjustments',
+      children: []
+    }, {
+      name: 'Stock Adjustments History',
+      path: 'stock-adjustments-history',
+      children: []
     }]
   },
   {
