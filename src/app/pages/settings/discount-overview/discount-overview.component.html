@@ -6,8 +6,8 @@
       <app-search (emitSearch$)="filterDiscounts($event)"></app-search>
       <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
     </div>
-    <app-table [items]="(items$ | async) || []" [columns]="columns" [keys]="keys" [actions]="tableActions"
-      (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
+    <app-table [tableName]="'discountTable'" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
+      [actions]="tableActions" (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
     <app-add-discount #addDiscount></app-add-discount>
     <app-confirm-modal #confirmDeleteModal (emitSubmit$)="deleteDiscount()"></app-confirm-modal>
     <app-confirm-modal #confirmDeleteAllModal (emitSubmit$)="deleteAllDiscounts()"></app-confirm-modal>

@@ -62,6 +62,7 @@ export class ProductsDetailComponent implements OnInit {
     try {
       await this.productService.updateProduct(this.form.getRawValue());
       this.generalService.toast.set({ show: true, message: 'Product successfully updated', type: 'alert-success' });
+      this.router.navigate(['manage-inventory']);
     } catch (e) {
     }
 

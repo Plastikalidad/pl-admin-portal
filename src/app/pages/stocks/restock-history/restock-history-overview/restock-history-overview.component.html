@@ -4,8 +4,8 @@
       <app-search (emitSearch$)="filterRestock($event)"></app-search>
 
     </div>
-    <app-table [showCheckboxColumn]="false" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
-      [actions]="tableActions" (emitAction$)="executeTableAction($event)"></app-table>
+    <app-table [tableName]="'restockTable'" [showCheckboxColumn]="false" [items]="(items$ | async) || []"
+      [columns]="columns" [keys]="keys" [actions]="tableActions" (emitAction$)="executeTableAction($event)"></app-table>
 
     <app-confirm-modal #confirmModal (emitSubmit$)="confirmRestock()"></app-confirm-modal>
   </div>

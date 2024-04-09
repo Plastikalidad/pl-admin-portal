@@ -6,8 +6,8 @@
       <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
       }
     </div>
-    <app-table [showCheckboxColumn]="false" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
-      [actions]="tableActions" (emitAction$)="executeTableAction($event)"></app-table>
+    <app-table [tableName]="'orderTable'" [showCheckboxColumn]="false" [items]="(items$ | async) || []"
+      [columns]="columns" [keys]="keys" [actions]="tableActions" (emitAction$)="executeTableAction($event)"></app-table>
     <app-add-order #addOrder></app-add-order>
     <app-confirm-modal #confirmUpdateStatusModal (emitSubmit$)="updateStatus()"></app-confirm-modal>
   </div>

@@ -6,8 +6,8 @@
       <app-search (emitSearch$)="filterSizes($event)"></app-search>
       <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
     </div>
-    <app-table [items]="(items$ | async) || []" [columns]="columns" [keys]="keys" [actions]="tableActions"
-      (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
+    <app-table [tableName]="'sizeTable'" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
+      [actions]="tableActions" (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
     <app-add-size #addSize></app-add-size>
     <app-confirm-modal #confirmDeleteModal (emitSubmit$)="deleteSize()"></app-confirm-modal>
     <app-confirm-modal #confirmDeleteAllModal (emitSubmit$)="deleteAllSizes()"></app-confirm-modal>

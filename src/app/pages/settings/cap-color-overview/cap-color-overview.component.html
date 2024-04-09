@@ -6,8 +6,8 @@
       <app-search (emitSearch$)="filterCapColors($event)"></app-search>
       <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
     </div>
-    <app-table [items]="(items$ | async) || []" [columns]="columns" [keys]="keys" [actions]="tableActions"
-      (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
+    <app-table [tableName]="'capColorTable'" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
+      [actions]="tableActions" (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
     <app-add-cap-color #addCapColor></app-add-cap-color>
     <app-confirm-modal #confirmDeleteModal (emitSubmit$)="deleteCapColor()"></app-confirm-modal>
     <app-confirm-modal #confirmDeleteAllModal (emitSubmit$)="deleteAllCapColors()"></app-confirm-modal>

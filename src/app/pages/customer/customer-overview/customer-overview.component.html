@@ -4,8 +4,8 @@
       <app-search (emitSearch$)="filterCustomers($event)"></app-search>
       <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
     </div>
-    <app-table [items]="(items$ | async) || []" [columns]="columns" [keys]="keys" [actions]="tableActions"
-      (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
+    <app-table [tableName]="'customerTable'" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
+      [actions]="tableActions" (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
     <app-add-customer #addCustomer></app-add-customer>
     <app-confirm-modal #confirmDeleteModal (emitSubmit$)="deleteCustomer()"></app-confirm-modal>
     <app-confirm-modal #confirmDeleteAllModal (emitSubmit$)="deleteAllCustomer()"></app-confirm-modal>

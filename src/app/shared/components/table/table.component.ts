@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChildren, inject } from '@angular/core';
+import { GeneralService } from '../../../states/general.service';
 
 @Component({
   selector: 'app-table',
@@ -7,7 +8,8 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChildren } from
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TableComponent<T> {
+export class TableComponent<T> implements OnInit {
+  @Input() tableName: string = '';
   @Input() items: T[] = [];
   @Input() columns: string[] = [];
   @Input() keys: Array<keyof T> = [];
@@ -17,8 +19,17 @@ export class TableComponent<T> {
   @Output() emitAction$ = new EventEmitter<{ action: string, item: T }>();
   @ViewChildren('checkbox')
   checkbox!: ElementRef[];
+  public generalService = inject(GeneralService);
   public pageNumber: number = 1;
   public itemsPerPage: number = 5;
+
+  public ngOnInit(): void {
+    const table = this.generalService.pageTable().find(data => data.table === this.tableName);
+    if (table) {
+      this.pageNumber = table.page;
+      this.itemsPerPage = table.item;
+    }
+  }
 
 
   public onActionClick(action: string, item: T) {
@@ -56,5 +67,43 @@ export class TableComponent<T> {
       (e.nativeElement as HTMLInputElement).checked = value;
     });
 
+  }
+
+  public changePage(action: 'next' | 'prev') {
+    if (action === 'prev')
+      this.pageNumber = this.pageNumber - 1;
+    else
+      this.pageNumber = this.pageNumber + 1;
+
+    const table = this.generalService.pageTable().find(data => data.table === this.tableName);
+    if (table) {
+      this.generalService.pageTable.update(table => table.map(d => {
+        if (d.table === this.tableName) {
+          return { ...d, page: this.pageNumber }
+        }
+        return d
+      }))
+    }
+    else {
+      this.generalService.pageTable.update(table => [...table, { table: this.tableName, page: this.pageNumber, item: this.itemsPerPage }])
+    }
+  }
+
+  public changeItemsPerPage(itemNumber: number) {
+    this.pageNumber = 1;
+    this.itemsPerPage = itemNumber
+
+    const table = this.generalService.pageTable().find(data => data.table === this.tableName);
+    if (table) {
+      this.generalService.pageTable.update(table => table.map(d => {
+        if (d.table === this.tableName) {
+          return { ...d, page: this.pageNumber, item: this.itemsPerPage }
+        }
+        return d
+      }))
+    }
+    else {
+      this.generalService.pageTable.update(table => [...table, { table: this.tableName, page: this.pageNumber, item: this.itemsPerPage }])
+    }
   }
 }
