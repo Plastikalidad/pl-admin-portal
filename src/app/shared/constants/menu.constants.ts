@@ -54,6 +54,11 @@ export const MenuItems: Menu[] = [
       children: []
     },
     {
+      name: 'Order Queue',
+      path: 'order-queue',
+      children: []
+    },
+    {
       name: 'Completed Orders',
       path: 'completed-orders',
       children: []
@@ -61,10 +66,6 @@ export const MenuItems: Menu[] = [
     {
       name: 'Cancelled Orders',
       path: 'cancelled-orders',
-      children: []
-    }, {
-      name: 'Order Queue',
-      path: 'order-queue',
       children: []
     }
     ]

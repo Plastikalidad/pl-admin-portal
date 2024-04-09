@@ -70,7 +70,7 @@ export class RestockHistoryDetailComponent implements OnInit {
   public initializeProduct() {
     return this.fb.group({
       key: [''],
-      code: [{ value: '', disabled: true }, Validators.required],
+      code: ['', Validators.required],
       design: [{ value: '', disabled: true }, Validators.required],
       size: [{ value: '', disabled: true }, Validators.required],
       availableStocks: [{ value: '', disabled: true }, Validators.required],
