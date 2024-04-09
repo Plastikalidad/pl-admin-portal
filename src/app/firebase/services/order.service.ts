@@ -53,6 +53,34 @@ export class OrderService {
 
   }
 
+  public getOrdersByProduct(code: string, status: 'Reserved' | 'Completed' | 'Confirmed' | 'Cancelled' = 'Completed'): Observable<Order[]> {
+
+    return this.db.list('orders').snapshotChanges()
+      .pipe(
+        map((changes) => {
+          return changes
+            .map((c) => {
+              const orders = ({ ...c.payload.toJSON(), key: c.payload.key } as Order)
+              return orders;
+            })
+        }),
+
+      ).pipe(
+        map(items => {
+
+          return items.filter(item => {
+            const prod: any[] = [];
+            Object.keys(item.products).forEach((d: any) => {
+              prod.push(item.products[d]);
+            })
+            return prod.find(product => product.code === code) && item.status === status
+          })
+        }
+        )
+      )
+
+  }
+
   public getOrdersByStatus(searchItem: string): Observable<Order[]> {
     return this.db.list('orders').snapshotChanges()
       .pipe(

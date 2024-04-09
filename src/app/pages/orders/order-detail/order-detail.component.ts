@@ -41,7 +41,8 @@ export class OrderDetailComponent {
   public customers = this.customerService.getCustomers();
   public products = this.productService.getProducts();
   public toUpdate = false;
-  public discounts: Discount[] = []
+  public discounts: Discount[] = [];
+  public viewingOnly = false;
 
   public ngOnInit(): void {
     this.discountService.getDiscounts().subscribe(discounts => {
@@ -58,6 +59,17 @@ export class OrderDetailComponent {
       }
       this.form.patchValue(order[0]);
     });
+    this.checkUrl();
+  }
+
+  public checkUrl() {
+    if (this.router.url.includes('sales-history')
+      || this.router.url.includes('customer-order-history')
+      || this.router.url.includes('cancelled-orders')
+      || this.router.url.includes('completed-orders')) {
+      this.form.disable();
+      this.viewingOnly = true;
+    }
   }
 
   public form: FormGroup = this.fb.group({

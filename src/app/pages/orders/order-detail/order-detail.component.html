@@ -2,12 +2,16 @@
   <div class="card-body">
     <h3 class="font-bold text-lg">Update Order</h3>
     <div class="modal-content" [formGroup]="form">
-      <label class="form-control w-full ">
-        <div class="label">
-          <span class="label-text">Date</span>
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <label class="form-control w-full ">
+            <div class="label">
+              <span class="label-text">Date</span>
+            </div>
+            <input formControlName="date" type="date" placeholder="" class="input input-bordered w-full " />
+          </label>
         </div>
-        <input formControlName="date" type="date" placeholder="" class="input input-bordered w-full " />
-      </label>
+      </div>
       <div class="card card-side bg-base-100 shadow-xl mb-5">
         <div class="card-body">
           <h4>Order Code</h4>
@@ -21,7 +25,7 @@
       </div>
       <div class="card card-side bg-base-100 shadow-xl mt-2 mb-5">
         <div class="card-body">
-          <h4>Customer Details</h4>
+          <h2><b>Customer Information</b></h2>
           <ng-container formGroupName="customer">
             <label class="form-control w-full ">
               <div class="label">
@@ -85,6 +89,7 @@
         @for(product of getProducts().controls; track getProducts(); let idx = $index) {
         <div class="card card-side bg-base-100 shadow-xl mt-2 mb-5">
           <div class="card-body">
+            <h2><b>Product {{idx + 1}}</b></h2>
             <ng-container [formGroupName]="idx">
               <label class="form-control w-full ">
                 <div class="label">
@@ -158,7 +163,7 @@
               </label>
               <div class="modal-action">
                 <!-- if there is a button in form, it will close the modal -->
-                @if(getProducts().controls.length > 1) {
+                @if(getProducts().controls.length > 1 && !viewingOnly) {
                 <button class="btn btn-outline" (click)="deleteProduct(idx)">Delete</button>
                 }
               </div>
@@ -186,14 +191,17 @@
           </label>
         </div>
       </div>
-
+      @if(!viewingOnly) {
       <button class="btn btn-accent" (click)="addProduct()">Add Product</button>
+      }
 
     </div>
     <div class="modal-action">
       <!-- if there is a button in form, it will close the modal -->
       <button class="btn btn-outline" (click)="onCancel()">Cancel</button>
+      @if(!viewingOnly) {
       <button class="btn btn-accent" (click)="onSubmit()">Submit</button>
+      }
     </div>
   </div>
 </div>

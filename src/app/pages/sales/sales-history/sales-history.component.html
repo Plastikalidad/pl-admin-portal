@@ -1,0 +1,24 @@
+<div class="card card-side bg-base-100 shadow-xl mb-10">
+  <div class="card-body">
+    <div class="flex justify-between">
+      <app-search (emitSearch$)="filterOrders($event)"></app-search>
+      <label class=" flex gap-2">
+        <div class="label">
+          <span class="label-text">Products</span>
+        </div>
+        <select (change)="filterByProduct($event)" type="text" class="input input-bordered w-full">
+          <option value=""></option>
+          @for(product of (products | async); track product.code) {
+          <option [value]="product.code">{{product.design}} | {{product.size}}</option>
+          }
+        </select>
+      </label>
+      @if(actions.length) {
+      <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
+      }
+    </div>
+    <app-table [tableName]="'orderTable'" [showCheckboxColumn]="false" [items]="(items$ | async) || []"
+      [columns]="columns" [keys]="keys" [actions]="tableActions" (emitAction$)="executeTableAction($event)"></app-table>
+    <app-add-order #addOrder></app-add-order>
+  </div>
+</div>

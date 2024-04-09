@@ -1,16 +1,32 @@
 <dialog #dialogModal class="modal">
   <div class="modal-box">
-    <h3 class="font-bold text-lg">Add Restock</h3>
+    <h3 class="font-bold text-lg">Add Order</h3>
     <div class="modal-content" [formGroup]="form">
-      <label class="form-control w-full ">
-        <div class="label">
-          <span class="label-text">Date</span>
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <label class="form-control w-full ">
+            <div class="label">
+              <span class="label-text">Date</span>
+            </div>
+            <input formControlName="date" type="date" placeholder="" class="input input-bordered w-full " />
+          </label>
         </div>
-        <input formControlName="date" type="date" placeholder="" class="input input-bordered w-full " />
-      </label>
+      </div>
+
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <label class="form-control w-full ">
+            <div class="label">
+              <span class="label-text">Code</span>
+            </div>
+            <input formControlName="code" type="text" placeholder="" class="input input-bordered w-full " />
+          </label>
+        </div>
+      </div>
       <div class="card card-side bg-base-100 shadow-xl mt-2 mb-5">
         <div class="card-body">
           <ng-container formGroupName="customer">
+            <h2><b>Customer Information</b></h2>
             <label class="form-control w-full ">
               <div class="label">
                 <span class="label-text">Code</span>
@@ -69,17 +85,12 @@
         </div>
       </div>
 
-      <label class="form-control w-full ">
-        <div class="label">
-          <span class="label-text">Code</span>
-        </div>
-        <input formControlName="code" type="text" placeholder="" class="input input-bordered w-full " />
-      </label>
       <ng-container formArrayName="products">
 
         @for(product of getProducts().controls; track getProducts(); let idx = $index) {
         <div class="card card-side bg-base-100 shadow-xl mt-2 mb-5">
           <div class="card-body">
+            <h2><b>Product {{idx + 1}}</b></h2>
             <ng-container [formGroupName]="idx">
               <label class="form-control w-full ">
                 <div class="label">

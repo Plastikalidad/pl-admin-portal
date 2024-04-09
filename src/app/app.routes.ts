@@ -80,5 +80,13 @@ export const routes: Routes = [
   {
     path: 'customer-order-history/:code',
     loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
-  }
+  },
+  {
+    path: 'sales-history',
+    loadComponent: () => import('./pages/sales/sales-history/sales-history.component').then(c => c.SalesHistoryComponent)
+  },
+  {
+    path: 'sales-history/:code',
+    loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
+  },
 ];
