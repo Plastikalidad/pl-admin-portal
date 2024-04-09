@@ -158,7 +158,9 @@ export class AddOrderComponent {
     }
     else {
       this.toUpdate = false;
-      this.form.get('code')?.setValue(this.generatorService.generateKey('O'));
+      this.orderService.getOrders().subscribe(d => {
+        this.form.get('code')?.setValue(`OR-${d.length + 1}`);
+      });
     }
     this.form.get('code')?.disable();
     this.dialogModal?.nativeElement.showModal()
