@@ -89,4 +89,16 @@ export const routes: Routes = [
     path: 'sales-history/:code',
     loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
   },
+  {
+    path: 'stock-adjustments',
+    loadComponent: () => import('./pages/stocks/stock-adjustment/stock-adjustment.component').then(c => c.StockAdjustmentComponent)
+  },
+  {
+    path: 'stock-adjustments-history',
+    loadComponent: () => import('./pages/stocks/stock-adjustment-overview/stock-adjustment-overview.component').then(c => c.StockAdjustmentOverviewComponent)
+  },
+  {
+    path: 'stock-adjustments-history/:code',
+    loadComponent: () => import('./pages/stocks/stock-adjustment-detail/stock-adjustment-detail.component').then(c => c.StockAdjustmentDetailComponent)
+  },
 ];

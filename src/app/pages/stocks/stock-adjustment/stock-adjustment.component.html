@@ -1,0 +1,13 @@
+<div class="card card-side bg-base-100 shadow-xl mb-10">
+  <div class="card-body">
+    <div class="flex justify-between">
+      <app-search (emitSearch$)="filterProducts($event)"></app-search>
+      <app-action-menu [actions]="actions" (emitAction$)="executeAction($event)"></app-action-menu>
+    </div>
+    <app-table [tableName]="'stockAdjustmentTable'" [items]="(items$ | async) || []" [columns]="columns" [keys]="keys"
+      [actions]="tableActions" (emitAction$)="executeTableAction($event)" (onCheck$)="onCheck($event)"></app-table>
+    <app-add-stock-adjustment #addStock></app-add-stock-adjustment>
+    <app-confirm-modal #confirmDeleteModal (emitSubmit$)="deleteProduct()"></app-confirm-modal>
+    <app-confirm-modal #confirmDeleteAllModal (emitSubmit$)="deleteAllProduct()"></app-confirm-modal>
+  </div>
+</div>
