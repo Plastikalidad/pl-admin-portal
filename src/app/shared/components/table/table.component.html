@@ -54,17 +54,16 @@
   </table>
   <div class="flex justify-center mt-3">
     <div class="join">
-      <button class="join-item btn" (click)="pageNumber = pageNumber - 1" [disabled]="pageNumber === 1">«</button>
+      <button class="join-item btn" (click)="changePage('prev')" [disabled]="pageNumber === 1">«</button>
       <button class="join-item btn">Page {{pageNumber}}</button>
-      <button class="join-item btn" (click)="pageNumber = pageNumber + 1"
-        [disabled]="!checkPaginate(items).length">»</button>
+      <button class="join-item btn" (click)="changePage('next')" [disabled]="!checkPaginate(items).length">»</button>
     </div>
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-link">items: {{itemsPerPage}}</div>
       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-        <li (click)="itemsPerPage = 5; pageNumber = 1"><a>5</a></li>
-        <li (click)="itemsPerPage = 10; pageNumber = 1"><a>10</a></li>
-        <li (click)="itemsPerPage = 15; pageNumber = 1"><a>15</a></li>
+        <li (click)="changeItemsPerPage(5)"><a>5</a></li>
+        <li (click)="changeItemsPerPage(10)"><a>10</a></li>
+        <li (click)="changeItemsPerPage(15)"><a>15</a></li>
       </ul>
     </div>
   </div>
