@@ -48,7 +48,6 @@ export class OrderDetailComponent {
       this.discounts = discounts;
     });
     this.orderService.getOrder(this.code).pipe(take(1)).subscribe(order => {
-      console.log(order)
       const products: { code: string; design: string; size: string; availableStocks: number; quantity: number; regPricePerBundle: number; qtyPerBundle: number; }[] = [];
       Object.keys(order[0].products).forEach((key: string) => {
         products.push(order[0].products[parseInt(key)])

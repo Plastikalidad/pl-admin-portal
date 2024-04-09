@@ -34,6 +34,25 @@ export class OrderService {
 
   }
 
+  public getOrdersByCustomer(code: string, status: 'Reserved' | 'Completed' | 'Confirmed' | 'Cancelled' = 'Completed'): Observable<Order[]> {
+    return this.db.list('orders').snapshotChanges()
+      .pipe(
+        map((changes) => {
+          return changes
+            .map((c) => {
+              const orders = ({ ...c.payload.toJSON(), key: c.payload.key } as Order)
+              return orders;
+            })
+        }),
+
+      ).pipe(
+        map(items =>
+          code ? items.filter(item => item.customer.code === code && item.status === status) : items
+        )
+      )
+
+  }
+
   public getOrdersByStatus(searchItem: string): Observable<Order[]> {
     return this.db.list('orders').snapshotChanges()
       .pipe(

@@ -72,5 +72,13 @@ export const routes: Routes = [
   {
     path: 'order-queue/:code',
     loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
+  },
+  {
+    path: 'customer-order-history',
+    loadComponent: () => import('./pages/customer/customer-history/customer-history.component').then(c => c.CustomerHistoryComponent)
+  },
+  {
+    path: 'customer-order-history/:code',
+    loadComponent: () => import('./pages/orders/order-detail/order-detail.component').then(c => c.OrderDetailComponent)
   }
 ];
