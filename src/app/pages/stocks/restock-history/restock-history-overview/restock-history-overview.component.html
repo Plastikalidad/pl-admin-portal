@@ -8,5 +8,6 @@
       [columns]="columns" [keys]="keys" [actions]="tableActions" (emitAction$)="executeTableAction($event)"></app-table>
 
     <app-confirm-modal #confirmModal (emitSubmit$)="confirmRestock()"></app-confirm-modal>
+    <app-simple-view-stock #simpleViewModal></app-simple-view-stock>
   </div>
 </div>

@@ -27,6 +27,7 @@
     "@auth0/auth0-angular": "^2.2.3",
     "ag-charts-angular": "^9.1.1",
     "firebase": "^10.9.0",
+    "ngx-print-element": "^2.1.6",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
