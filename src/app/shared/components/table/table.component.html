@@ -46,7 +46,17 @@
         }
 
         @for(key of keys; track key) {
+        @if(key === 'status') {
+        <td>
+          <div class="badge {{getBadge(data[key])}} gap-2 p-3">
+            {{data[key]}}
+          </div>
+        </td>
+        }
+        @else {
         <td>{{data[key]}}</td>
+
+        }
 
         }
 

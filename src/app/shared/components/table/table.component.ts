@@ -106,4 +106,20 @@ export class TableComponent<T> implements OnInit {
       this.generalService.pageTable.update(table => [...table, { table: this.tableName, page: this.pageNumber, item: this.itemsPerPage }])
     }
   }
+
+  public getBadge(status: 'Reserved' | 'Confirmed' | 'Completed' | 'Cancelled' = 'Reserved') {
+    if (status === 'Reserved') {
+      return 'badge-info';
+    }
+    if (status === 'Confirmed') {
+      return 'badge-warning';
+    }
+    if (status === 'Completed') {
+      return 'badge-success';
+    }
+    if (status === 'Cancelled') {
+      return 'badge-error';
+    }
+    return 'badge-info';
+  }
 }

@@ -165,7 +165,20 @@ export class OrderOverviewComponent implements OnInit {
 
 
   public filterOrders(searchItem: string) {
-    this.items$ = this.orderService.getOrders(searchItem);
+    let status: 'Confirmed' | 'Reserved' | 'Completed' | 'Cancelled' = 'Reserved';
+    if (this.router.url.includes('reserved')) {
+      status = 'Reserved';
+    }
+    else if (this.router.url.includes('completed')) {
+      status = 'Completed';
+    }
+    else if (this.router.url.includes('queue')) {
+      status = 'Confirmed';
+    }
+    else if (this.router.url.includes('cancelled')) {
+      status = 'Cancelled';
+    }
+    this.items$ = this.orderService.getOrders(searchItem, status);
   }
 
 

@@ -12,7 +12,7 @@ export class OrderService {
   public OrdersRef: AngularFireList<Order> = this.db.list<Order>('orders');
 
 
-  public getOrders(searchItem?: string): Observable<Order[]> {
+  public getOrders(searchItem?: string, status: 'Reserved' | 'Completed' | 'Confirmed' | 'Cancelled' = 'Reserved'): Observable<Order[]> {
     return this.db.list('orders').snapshotChanges()
       .pipe(
         map((changes) => {
@@ -25,10 +25,10 @@ export class OrderService {
 
       ).pipe(
         map(items =>
-          searchItem ? (items.filter(item => item.code.includes(searchItem as string)) ||
-            items.filter(item => item.customer.firstName.includes(searchItem as string)) ||
-            items.filter(item => item.customer.lastName.includes(searchItem as string)) ||
-            items.filter(item => item.code.includes(searchItem as string))) : items
+          searchItem ? ((items.filter(item => item.code.includes(searchItem as string) && item.status === status) ||
+            items.filter(item => item.customer.firstName.includes(searchItem as string) && item.status === status) ||
+            items.filter(item => item.customer.lastName.includes(searchItem as string) && item.status === status) ||
+            items.filter(item => item.code.includes(searchItem as string) && item.status === status))) : items.filter(item => item.status === status)
         )
       )
 
