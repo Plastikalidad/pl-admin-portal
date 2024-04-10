@@ -58,6 +58,7 @@ export class AddStocksComponent implements OnInit {
       code: ['', Validators.required],
       design: [{ value: '', disabled: true }, Validators.required],
       size: [{ value: '', disabled: true }, Validators.required],
+      capColors: [{ value: '', disabled: true }, Validators.required],
       availableStocks: [{ value: '', disabled: true }, Validators.required],
       regPricePerBundle: [{ value: '', disabled: true }, Validators.required],
       qtyPerBundle: [{ value: '', disabled: true }, Validators.required],

@@ -11,16 +11,18 @@ import { Restock } from "../../../../shared/interfaces/restock.interface";
 import { RestockService } from "../../../../firebase/services/restock.service";
 import { ProductService } from "../../../../firebase/services/product.service";
 import { Observable, catchError, forkJoin, map, take, tap } from "rxjs";
+import { SimpleViewStockComponent } from "../../../../modals/simple-view-stock/simple-view-stock.component";
 
 @Component({
   selector: 'app-restock-history-overview',
   standalone: true,
-  imports: [CommonModule, TableComponent, ActionMenuComponent, SearchComponent, ConfirmModalComponent],
+  imports: [CommonModule, TableComponent, ActionMenuComponent, SearchComponent, ConfirmModalComponent, SimpleViewStockComponent],
   templateUrl: './restock-history-overview.component.html',
   styleUrl: './restock-history-overview.component.scss'
 })
 export class RestockHistoryOverviewComponent {
   @ViewChild('confirmModal') confirmModal: ConfirmModalComponent | undefined;
+  @ViewChild('simpleViewModal') simpleViewModal: SimpleViewStockComponent | undefined;
   public restockService = inject(RestockService);
   public router = inject(Router);
   public generalService = inject(GeneralService);
@@ -29,7 +31,7 @@ export class RestockHistoryOverviewComponent {
   keys: Array<keyof Restock> = ['date', 'code', 'totalPrice', 'status', 'notes'];
   columns = ['Date', 'code', 'totalPrice', 'Status', 'Notes'];
   actions = [];
-  tableActions = ['Update', 'Confirm'];
+  tableActions = ['Simple View', 'Update', 'Confirm'];
   confirmedRestock: Restock | null = null;
 
 
@@ -48,6 +50,10 @@ export class RestockHistoryOverviewComponent {
         this.confirmedRestock = data.item as Restock;
         this.confirmModal?.openModal({ title: 'Confirm', message: `Confirming restock will add to the products, Are you sure you want to continue?` });
         return;
+      }
+
+      case "Simple View": {
+        this.simpleViewModal?.openModal((data.item as Restock).products);
       }
 
     }
