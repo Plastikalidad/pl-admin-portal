@@ -152,6 +152,7 @@ export class AddOrderComponent {
 
 
   public openModal(update: boolean = false, data: Discount | null = null) {
+    this.form.get('status')?.setValue('Reserved');
     if (update && data) {
       this.toUpdate = true;
       this.form.patchValue(data)
