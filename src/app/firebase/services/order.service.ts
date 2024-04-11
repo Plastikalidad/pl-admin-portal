@@ -11,6 +11,21 @@ export class OrderService {
   public db = inject(AngularFireDatabase);
   public OrdersRef: AngularFireList<Order> = this.db.list<Order>('orders');
 
+  public getAllOrders(): Observable<Order[]> {
+    return this.db.list('orders').snapshotChanges()
+      .pipe(
+        map((changes) => {
+          return changes
+            .map((c) => {
+              const orders = ({ ...c.payload.toJSON(), key: c.payload.key } as Order)
+              return orders;
+            })
+        }),
+
+      )
+  }
+
+
 
   public getOrders(searchItem?: string, status: 'Reserved' | 'Completed' | 'Confirmed' | 'Cancelled' = 'Reserved'): Observable<Order[]> {
     return this.db.list('orders').snapshotChanges()

@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AgChartsAngular } from 'ag-charts-angular';
 import { AgChartOptions, AgChartTheme } from 'ag-charts-community';
+import { OrderService } from '../../firebase/services/order.service';
+import { CustomerService } from '../../firebase/services/customer.service';
+import { ProductService } from '../../firebase/services/product.service';
+import { CommonModule } from '@angular/common';
+import { Order } from '../../shared/interfaces/order.interface';
+import { Customer } from '../../shared/interfaces/customer.interface';
+import { Product } from '../../shared/interfaces/product.interface';
 
 var theme: AgChartTheme = {
-  baseTheme: 'ag-default-dark',
+  baseTheme: 'ag-sheets',
   palette: {
     fills: ['#5C2983', '#0076C5', '#21B372', '#FDDE02', '#F76700', '#D30018'],
     strokes: ['black'],
@@ -28,7 +35,7 @@ var theme: AgChartTheme = {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AgChartsAngular],
+  imports: [AgChartsAngular, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -36,12 +43,47 @@ export class DashboardComponent {
   public lineOptions: AgChartOptions | undefined;
   public barOptions: AgChartOptions | undefined;
 
+  public orderService = inject(OrderService);
+  public customService = inject(CustomerService);
+  public productService = inject(ProductService);
+  public orders: Order[] = [];
+  public reservedOrders: Order[] = [];
+  public confirmedOrders: Order[] = [];
+  public completedOrders: Order[] = [];
+  public cancelledOrders: Order[] = [];
+  public customers: Customer[] = [];
+  public products: Product[] = [];
+  public latestReservedOrder: Order | undefined = undefined;
+  public latestConfirmedOrder: Order | undefined = undefined;
+  public totalStockValue = 0;
+
+
   constructor() {
     this.getTopProducts();
     this.getTopCustomers();
     this.getRunningOutOfStock();
     this.getTopSalesForCurrentMonth();
+    this.orderService.getAllOrders().subscribe(d => {
+      this.orders = d;
+      this.reservedOrders = this.orders.filter(order => order.status === 'Reserved');
+      this.confirmedOrders = this.orders.filter(order => order.status === 'Confirmed');
+      this.completedOrders = this.orders.filter(order => order.status === 'Completed');
+      this.cancelledOrders = this.orders.filter(order => order.status === 'Cancelled');
+      this.latestReservedOrder = this.reservedOrders[this.reservedOrders.length - 1];
+      this.latestConfirmedOrder = this.confirmedOrders[this.confirmedOrders.length - 1];
+    });
+    this.customService.getCustomers().subscribe(d => {
+      this.customers = d;
+    });
+    this.productService.getProducts().subscribe(d => {
+      this.products = d;
+      this.products.map(d => {
+        this.totalStockValue = this.totalStockValue + (d.availableStocks * d.sellingPricePer100);
+      })
+    })
   }
+
+
 
   public getTopProducts() {
     this.lineOptions = {

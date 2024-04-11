@@ -1,19 +1,125 @@
-<div class="flex">
-  <div class="card card-side bg-base-100 shadow-xl mb-10 mr-10">
-    <div class="card-body">
-      @if(lineOptions) {
-      <ag-charts-angular style="height: 100%;" [options]="lineOptions">
-      </ag-charts-angular>
-      }
-    </div>
+<div class="stats shadow">
+
+  <div class="stat">
+    <div class="stat-title">Total Stock Value</div>
+    <div class="stat-value">{{totalStockValue}}</div>
+    <div class="stat-desc">the total stock value of products</div>
   </div>
-  <div class="card card-side bg-base-100 shadow-xl mb-10">
-    <div class="card-body">
-      @if(barOptions) {
-      <ag-charts-angular style="height: 100%" [options]="barOptions">
-      </ag-charts-angular>
-      }
+
+</div>
+
+
+<div class="stats shadow ml-3">
+
+  <div class="stat" *ngIf="latestReservedOrder">
+    <div class="stat-title">Latest Reserved Order</div>
+    <div class="stat-value">{{latestReservedOrder?.code}}</div>
+    <div class="stat-desc">{{latestReservedOrder?.customer?.firstName}} {{latestReservedOrder?.customer?.lastName}}
     </div>
   </div>
 
+</div>
+
+<div class="stats shadow ml-3">
+
+  <div class="stat" *ngIf="latestConfirmedOrder">
+    <div class="stat-title">Latest Reserved Order</div>
+    <div class="stat-value">{{latestConfirmedOrder?.code}}</div>
+    <div class="stat-desc">{{latestConfirmedOrder?.customer?.firstName}} {{latestReservedOrder?.customer?.lastName}}
+    </div>
+  </div>
+
+</div>
+
+
+<h2 class="mt-4"><b>General Statistics</b></h2>
+<div class="stats shadow">
+
+  <div class="stat">
+    <div class="stat-figure text-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+        </path>
+      </svg>
+    </div>
+    <div class="stat-title">Total Orders</div>
+    <div class="stat-value text-primary">{{orders.length}}</div>
+    <div class="stat-desc">Total orders made</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+    </div>
+    <div class="stat-title">Total Products</div>
+    <div class="stat-value text-secondary">{{products.length}}</div>
+    <div class="stat-desc">total products for plastikalidad</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+    </div>
+    <div class="stat-title">Total Customers</div>
+    <div class="stat-value text-secondary">{{customers.length}}</div>
+    <div class="stat-desc">Total customers in directory</div>
+  </div>
+</div>
+
+<h2 class="mt-4"><b>Order Statistics</b></h2>
+<div class="stats shadow ">
+
+  <div class="stat">
+    <div class="stat-figure text-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+        </path>
+      </svg>
+    </div>
+    <div class="stat-title">Reserved Orders</div>
+    <div class="stat-value text-primary">{{reservedOrders.length}}</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+    </div>
+    <div class="stat-title">Confirmed Orders</div>
+    <div class="stat-value text-secondary">{{confirmedOrders.length}}</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+    </div>
+    <div class="stat-title">Completed Orders</div>
+    <div class="stat-value text-secondary">{{completedOrders.length}}</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+    </div>
+    <div class="stat-title">Cancelled Orders</div>
+    <div class="stat-value text-secondary">{{cancelledOrders.length}}</div>
+  </div>
 </div>
