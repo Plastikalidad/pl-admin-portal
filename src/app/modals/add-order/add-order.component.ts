@@ -159,7 +159,7 @@ export class AddOrderComponent {
     }
     else {
       this.toUpdate = false;
-      this.orderService.getOrders().subscribe(d => {
+      this.orderService.getAllOrders().subscribe(d => {
         this.form.get('code')?.setValue(`OR-${d.length + 1}`);
       });
     }

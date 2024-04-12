@@ -80,6 +80,7 @@ export class DashboardComponent {
       this.products.map(d => {
         this.totalStockValue = this.totalStockValue + (d.availableStocks * d.sellingPricePer100);
       })
+      this.totalStockValue = parseFloat(this.totalStockValue.toFixed(2));
     })
   }
 
