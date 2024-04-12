@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
@@ -24,6 +24,18 @@ export class AppComponent implements OnInit {
   public authService = inject(AuthService);
   public userService = inject(UserService);
   public generalService = inject(GeneralService);
+
+  constructor() {
+    if (localStorage.getItem('title')) {
+      this.generalService.pageTitle.set(localStorage.getItem('title') || '')
+      return;
+    }
+    effect(() => {
+      const title = this.generalService.pageTitle();
+      localStorage.setItem('title', this.generalService.pageTitle());
+    })
+  }
+
 
   public ngOnInit(): void {
     this.authService.user$.subscribe((d: User | null | undefined) => {

@@ -19,7 +19,7 @@ export class NavbarComponent {
 
 
   public navigate(name: string) {
-    this.generalService.pageTitle.set(name[0].toLocaleUpperCase() + name.slice(1, name.length));
+    this.generalService.pageTitle.update(() => name[0].toLocaleUpperCase() + name.slice(1, name.length));
     this.router.navigate([`/${name}`]);
   }
 

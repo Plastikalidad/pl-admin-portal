@@ -16,9 +16,15 @@ export class MenuComponent {
   public router = inject(Router);
   public generalService = inject(GeneralService);
 
-  public navigate(menu: Menu) {
-    this.generalService.pageTitle.set(menu.name);
+  public navigate(event: Event, menu: Menu) {
+    this.generalService.pageTitle.update(() => menu.name);
     this.router.navigate([menu.path]);
+    Array.from(document.querySelectorAll('a')).forEach(
+      (el) => {
+        el.classList.remove('active')
+      }
+    );
+    (event.target as HTMLLIElement).classList.add('active');
   }
 
 }

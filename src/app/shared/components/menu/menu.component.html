@@ -1,7 +1,7 @@
 <ul class="menu menu-xs bg-base-200 rounded-lg max-w-xs w-full">
   @for(data of menu; track data.name) {
-  @if(!data.children.length) {
-  <li (click)="navigate(data)"><a>
+  @if(!data.children?.length) {
+  <li class="li" (click)="navigate($event, data)"><a>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="w-4 h-4">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -23,7 +23,7 @@
       </summary>
       <ul>
         @for(child of data.children; track child.name) {
-        <li (click)="navigate(child)"><a>
+        <li class="li" (click)="navigate($event, child)"><a>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round"
