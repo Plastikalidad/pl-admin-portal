@@ -107,11 +107,11 @@ export class TableComponent<T> implements OnInit {
     }
   }
 
-  public getBadge(status: 'Reserved' | 'Confirmed' | 'Completed' | 'Cancelled' = 'Reserved') {
+  public getBadge(status: 'Reserved' | 'Not Packed' | 'Packed' | 'Completed' | 'Cancelled' = 'Reserved') {
     if (status === 'Reserved') {
       return 'badge-info';
     }
-    if (status === 'Confirmed') {
+    if (status === 'Not Packed' || status === 'Packed') {
       return 'badge-warning';
     }
     if (status === 'Completed') {

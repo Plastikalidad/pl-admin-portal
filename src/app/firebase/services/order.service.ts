@@ -27,7 +27,7 @@ export class OrderService {
 
 
 
-  public getOrders(searchItem?: string, status: 'Reserved' | 'Completed' | 'Confirmed' | 'Cancelled' = 'Reserved'): Observable<Order[]> {
+  public getOrders(searchItem?: string, status: 'Reserved' | 'Completed' | 'Packed' | 'Not Packed' | 'Cancelled' = 'Reserved'): Observable<Order[]> {
     return this.db.list('orders').snapshotChanges()
       .pipe(
         map((changes) => {
@@ -49,7 +49,7 @@ export class OrderService {
 
   }
 
-  public getOrdersByCustomer(code: string, status: 'Reserved' | 'Completed' | 'Confirmed' | 'Cancelled' = 'Completed'): Observable<Order[]> {
+  public getOrdersByCustomer(code: string, status: 'Reserved' | 'Completed' | 'Packed' | 'Not Packed' | 'Cancelled' = 'Completed'): Observable<Order[]> {
     return this.db.list('orders').snapshotChanges()
       .pipe(
         map((changes) => {
@@ -68,7 +68,7 @@ export class OrderService {
 
   }
 
-  public getOrdersByProduct(code: string, status: 'Reserved' | 'Completed' | 'Confirmed' | 'Cancelled' = 'Completed'): Observable<Order[]> {
+  public getOrdersByProduct(code: string, status: 'Reserved' | 'Completed' | 'Packed' | 'Not Packed' | 'Cancelled' = 'Completed'): Observable<Order[]> {
 
     return this.db.list('orders').snapshotChanges()
       .pipe(
@@ -96,7 +96,24 @@ export class OrderService {
 
   }
 
-  public getOrdersByStatus(searchItem: string): Observable<Order[]> {
+  public getOrdersByStatus(searchItem: string | Array<string>): Observable<Order[]> {
+    if (typeof searchItem === 'string') {
+      return this.db.list('orders').snapshotChanges()
+        .pipe(
+          map((changes) => {
+            return changes
+              .map((c) => {
+                const orders = ({ ...c.payload.toJSON(), key: c.payload.key } as Order)
+                return orders;
+              })
+          }),
+
+        ).pipe(
+          map(items =>
+            items.filter(item => item.status === searchItem))
+        )
+    }
+
     return this.db.list('orders').snapshotChanges()
       .pipe(
         map((changes) => {
@@ -109,10 +126,8 @@ export class OrderService {
 
       ).pipe(
         map(items =>
-          items.filter(item => item.status === searchItem))
+          items.filter(item => searchItem.includes(item.status)))
       )
-
-
   }
 
   public getOrder(id: string) {

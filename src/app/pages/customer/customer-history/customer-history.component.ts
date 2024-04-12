@@ -34,7 +34,7 @@ export class CustomerHistoryComponent {
   actions: string[] = [];
   tableActions = [''];
   url: string = '';
-  toUpdate: { item: Order | undefined, status: 'Reserved' | 'Confirmed' | 'Cancelled' | 'Completed' } = { item: undefined, status: 'Reserved' }
+  toUpdate: { item: Order | undefined, status: 'Reserved' | 'Packed' | 'Not Packed' | 'Cancelled' | 'Completed' } = { item: undefined, status: 'Reserved' }
   customers = this.customerService.getCustomers();
 
   public ngOnInit(): void {
