@@ -73,6 +73,7 @@ export class OrderOverviewComponent implements OnInit {
       this.packedOrders = orders.filter(order => order.status === 'Packed').length;
       this.notPackedOrders = orders.filter(order => order.status === 'Not Packed').length;
       this.cancelledOrders = orders.filter(order => order.status === 'Cancelled').length;
+      this.reservedOrders = orders.filter(order => order.status === 'Reserved').length
     });
   }
 
