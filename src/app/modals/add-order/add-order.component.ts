@@ -10,6 +10,7 @@ import { GeneralService } from '../../states/general.service';
 import { CommonModule } from '@angular/common';
 import { CustomerService } from '../../firebase/services/customer.service';
 import { OrderService } from '../../firebase/services/order.service';
+import { forkJoin, take, tap } from 'rxjs';
 
 
 @Component({
@@ -178,6 +179,27 @@ export class AddOrderComponent {
         this.generalService.toast.set({ show: true, message: 'Order successfully updated', type: 'alert-success' });
       }
       else {
+        const orderSubscription = [];
+        const products = (this.form.get('products') as FormArray).getRawValue();
+        for (let product of products) {
+          if (product) {
+            orderSubscription.push(this.productService.getProduct(product.code).pipe(
+              take(1),
+              tap(async (data) => {
+                const newStock = parseInt(data[0].availableStocks.toString()) - parseInt(product.quantity.toString());
+                await this.productService.updateProduct({ ...data[0], availableStocks: newStock })
+                return data;
+              })))
+          }
+        }
+        const subscription = forkJoin(orderSubscription).subscribe({
+          next: (d) => {
+            subscription.unsubscribe();
+          },
+          error: (e) => {
+            subscription.unsubscribe();
+          },
+        })
 
         await this.orderService.addOrder(this.form.getRawValue());
         this.generalService.toast.set({ show: true, message: 'Order successfully added', type: 'alert-success' });

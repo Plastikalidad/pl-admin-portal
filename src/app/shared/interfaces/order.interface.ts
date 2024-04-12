@@ -8,5 +8,5 @@ export interface Order {
   products: { code: string, design: string, size: string, availableStocks: number, quantity: number, regPricePerBundle: number, qtyPerBundle: number; }[];
   totalPrice: number;
   notes: string;
-  status: 'Reserved' | 'Confirmed' | 'Completed' | 'Cancelled'
+  status: 'Reserved' | 'Not Packed' | 'Packed' | 'Completed' | 'Cancelled'
 }

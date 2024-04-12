@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
 import { GeneralService } from '../../../states/general.service';
 import { AddOrderComponent } from '../../../modals/add-order/add-order.component';
-import { Observable, forkJoin, of, take, tap } from 'rxjs';
+import { Observable, forkJoin, map, of, take, tap } from 'rxjs';
 import { ProductService } from '../../../firebase/services/product.service';
 
 @Component({
@@ -32,34 +32,48 @@ export class OrderOverviewComponent implements OnInit {
   actions: string[] = [];
   tableActions = [''];
   url: string = '';
-  toUpdate: { item: Order | undefined, status: 'Reserved' | 'Confirmed' | 'Cancelled' | 'Completed' } = { item: undefined, status: 'Reserved' }
+  reservedOrders: number = 0;
+  notPackedOrders: number = 0;
+  packedOrders: number = 0;
+  completedOrders: number = 0;
+  cancelledOrders: number = 0;
+  toUpdate: { item: Order | undefined, status: 'Reserved' | 'Packed' | 'Not Packed' | 'Cancelled' | 'Completed' } = { item: undefined, status: 'Reserved' }
 
   public ngOnInit(): void {
     if (this.router.url.includes('reserved')) {
-      this.items$ = this.orderService.getOrdersByStatus('Reserved');
+      this.items$ = this.orderService.getOrdersByStatus('Reserved')
       this.url = 'reserved-orders';
       this.tableActions = ['Update', 'Confirm Order', 'Cancel Order'];
       this.actions = ['Add']
     }
     else if (this.router.url.includes('completed')) {
-      this.items$ = this.orderService.getOrdersByStatus('Completed');
+      this.items$ = this.orderService.getOrdersByStatus('Completed')
       this.url = 'completed-orders';
       this.tableActions = ['View'];
       this.actions = []
     }
     else if (this.router.url.includes('queue')) {
-      this.items$ = this.orderService.getOrdersByStatus('Confirmed');
+      this.items$ = this.orderService.getOrdersByStatus(['Not Packed', 'Packed'])
       this.url = 'order-queue';
-      this.tableActions = ['Reserve Order Again', 'Cancel Order', 'Complete Order'];
+      this.tableActions = ['Reserve Order Again', 'Pack Order', 'Cancel Order', 'Complete Order'];
       this.actions = []
     }
     else if (this.router.url.includes('cancelled')) {
-      this.items$ = this.orderService.getOrdersByStatus('Cancelled');
+      this.items$ = this.orderService.getOrdersByStatus('Cancelled')
       this.url = 'cancelled-orders';
       this.tableActions = ['View'];
       this.actions = []
     }
+    this.getStats();
+  }
 
+  public getStats() {
+    this.orderService.getAllOrders().subscribe(orders => {
+      this.completedOrders = orders.filter(order => order.status === 'Completed').length;
+      this.packedOrders = orders.filter(order => order.status === 'Packed').length;
+      this.notPackedOrders = orders.filter(order => order.status === 'Not Packed').length;
+      this.cancelledOrders = orders.filter(order => order.status === 'Cancelled').length;
+    });
   }
 
 
@@ -89,8 +103,14 @@ export class OrderOverviewComponent implements OnInit {
         return;
       }
 
+      case "Pack Order": {
+        this.toUpdate = { item: data.item as Order, status: 'Packed' }
+        this.confirmUpdateStatusModal?.openModal({ title: 'Pack Order', message: 'Are you sure you want to change status of order to Packed?' })
+        return;
+      }
+
       case "Confirm Order": {
-        this.toUpdate = { item: data.item as Order, status: 'Confirmed' }
+        this.toUpdate = { item: data.item as Order, status: 'Not Packed' }
         this.confirmUpdateStatusModal?.openModal({ title: 'Confirm Order', message: 'Are you sure you want to confirm the order?' })
         return;
       }
@@ -114,7 +134,7 @@ export class OrderOverviewComponent implements OnInit {
     const orderSubscription: Observable<any>[] = [];
     try {
       if (order) {
-        if ((this.toUpdate.status === 'Cancelled' && order.status === 'Confirmed') || (this.toUpdate.status === 'Reserved' && order.status === 'Confirmed')) {
+        if ((this.toUpdate.status === 'Cancelled' && (order.status === 'Not Packed' || order.status === 'Reserved' || order.status === 'Packed'))) {
           Object.keys(order.products).forEach((key: string) => {
             const product = order.products[parseInt(key)];
             if (product) {
@@ -128,22 +148,6 @@ export class OrderOverviewComponent implements OnInit {
             }
           })
         }
-        else if (this.toUpdate.status === 'Confirmed') {
-          Object.keys(order.products).forEach((key: string) => {
-            const product = order.products[parseInt(key)];
-            if (product) {
-              orderSubscription.push(this.productService.getProduct(product.code).pipe(
-                take(1),
-                tap(async (data) => {
-                  const newStock = parseInt(data[0].availableStocks.toString()) - parseInt(product.quantity.toString());
-                  await this.productService.updateProduct({ ...data[0], availableStocks: newStock })
-                  return data;
-                })))
-            }
-          })
-        }
-
-
         const subscription = forkJoin(orderSubscription).subscribe({
           next: (d) => {
             subscription.unsubscribe();
@@ -165,7 +169,7 @@ export class OrderOverviewComponent implements OnInit {
 
 
   public filterOrders(searchItem: string) {
-    let status: 'Confirmed' | 'Reserved' | 'Completed' | 'Cancelled' = 'Reserved';
+    let status: 'Not Packed' | 'Packed' | 'Reserved' | 'Completed' | 'Cancelled' = 'Reserved';
     if (this.router.url.includes('reserved')) {
       status = 'Reserved';
     }
@@ -173,8 +177,9 @@ export class OrderOverviewComponent implements OnInit {
       status = 'Completed';
     }
     else if (this.router.url.includes('queue')) {
-      status = 'Confirmed';
+      status = 'Not Packed';
     }
+
     else if (this.router.url.includes('cancelled')) {
       status = 'Cancelled';
     }

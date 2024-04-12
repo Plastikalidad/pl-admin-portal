@@ -48,13 +48,13 @@ export class DashboardComponent {
   public productService = inject(ProductService);
   public orders: Order[] = [];
   public reservedOrders: Order[] = [];
-  public confirmedOrders: Order[] = [];
   public completedOrders: Order[] = [];
   public cancelledOrders: Order[] = [];
+  public packedOrders: Order[] = [];
+  public notPackedOrders: Order[] = [];
   public customers: Customer[] = [];
   public products: Product[] = [];
   public latestReservedOrder: Order | undefined = undefined;
-  public latestConfirmedOrder: Order | undefined = undefined;
   public totalStockValue = 0;
 
 
@@ -66,11 +66,11 @@ export class DashboardComponent {
     this.orderService.getAllOrders().subscribe(d => {
       this.orders = d;
       this.reservedOrders = this.orders.filter(order => order.status === 'Reserved');
-      this.confirmedOrders = this.orders.filter(order => order.status === 'Confirmed');
       this.completedOrders = this.orders.filter(order => order.status === 'Completed');
+      this.packedOrders = this.orders.filter(order => order.status === 'Packed');
+      this.notPackedOrders = this.orders.filter(order => order.status === 'Not Packed');
       this.cancelledOrders = this.orders.filter(order => order.status === 'Cancelled');
       this.latestReservedOrder = this.reservedOrders[this.reservedOrders.length - 1];
-      this.latestConfirmedOrder = this.confirmedOrders[this.confirmedOrders.length - 1];
     });
     this.customService.getCustomers().subscribe(d => {
       this.customers = d;

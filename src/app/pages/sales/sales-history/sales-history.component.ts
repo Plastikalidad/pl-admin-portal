@@ -32,7 +32,7 @@ export class SalesHistoryComponent {
   actions: string[] = [];
   tableActions = [''];
   url: string = '';
-  toUpdate: { item: Order | undefined, status: 'Reserved' | 'Confirmed' | 'Cancelled' | 'Completed' } = { item: undefined, status: 'Reserved' }
+  toUpdate: { item: Order | undefined, status: 'Reserved' | 'Not Packed' | 'Packed' | 'Cancelled' | 'Completed' } = { item: undefined, status: 'Reserved' }
 
   products = this.productService.getProducts();
 
