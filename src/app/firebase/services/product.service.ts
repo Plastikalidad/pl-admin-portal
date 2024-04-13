@@ -25,7 +25,11 @@ export class ProductService {
 
       ).pipe(
         map(items =>
-          searchItem ? items.filter(item => item.code.includes(searchItem as string) || item.design.includes(searchItem as string) || item.size.includes(searchItem as string)) : items
+          searchItem ? items.filter(item => item.code.toLocaleLowerCase().includes(searchItem as string)
+            || item.design.toLocaleLowerCase().includes(searchItem as string) ||
+            item.size.toLocaleLowerCase().includes(searchItem as string)
+            || item.capColors.toLocaleLowerCase().includes(searchItem as string))
+            : items
         )
       )
 

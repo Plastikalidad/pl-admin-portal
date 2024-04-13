@@ -25,7 +25,7 @@ export class CapColorService {
 
       ).pipe(
         map(items =>
-          searchItem ? items.filter(item => item.code.includes(searchItem as string)) : items
+          searchItem ? items.filter(item => item.code.toLocaleLowerCase().includes(searchItem as string)) : items
         )
       )
 

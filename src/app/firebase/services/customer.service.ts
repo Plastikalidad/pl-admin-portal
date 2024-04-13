@@ -24,10 +24,11 @@ export class CustomerService {
 
       ).pipe(
         map(items =>
-          searchItem ? items.filter(item => item.code.includes(searchItem as string)) ||
-            items.filter(item => item.firstName.includes(searchItem as string)) ||
-            items.filter(item => item.lastName.includes(searchItem as string)) ||
-            items.filter(item => item.address.includes(searchItem as string)) : items
+          searchItem ? items.filter(item => item.address.toLocaleLowerCase().includes(searchItem as string)
+            || item.lastName.toLocaleLowerCase().includes(searchItem as string)
+            || item.code.toLocaleLowerCase().includes(searchItem as string)
+            || item.firstName.toLocaleLowerCase().includes(searchItem as string))
+            : items
         )
       )
 
