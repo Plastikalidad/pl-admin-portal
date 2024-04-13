@@ -7,7 +7,7 @@ import { GeneralService } from '../../../states/general.service';
 import { Product } from '../../../shared/interfaces/product.interface';
 import { CapColorService } from '../../../firebase/services/cap-color.service';
 import { SizeService } from '../../../firebase/services/size.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-products-detail',
@@ -24,6 +24,7 @@ export class ProductsDetailComponent implements OnInit {
   public capColorService = inject(CapColorService);
   public sizeService = inject(SizeService);
   public validatorsService = inject(ValidatorsService);
+  public location = inject(Location);
 
   public router = inject(Router);
   public name = this.activatedRoute.snapshot.params['code'];
@@ -61,6 +62,7 @@ export class ProductsDetailComponent implements OnInit {
     }
     try {
       await this.productService.updateProduct(this.form.getRawValue());
+      this.location.back();
       this.generalService.toast.set({ show: true, message: 'Product successfully updated', type: 'alert-success' });
       this.router.navigate(['manage-inventory']);
     } catch (e) {
