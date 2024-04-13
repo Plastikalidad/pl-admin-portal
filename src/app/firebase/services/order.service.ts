@@ -136,7 +136,7 @@ export class OrderService {
         map((changes) => {
           return changes
             .map((c) => {
-              const Order = ({ key: c.payload.key, ...c.payload.toJSON() } as Order)
+              const Order = ({ ...c.payload.toJSON(), key: c.payload.key } as Order)
               return Order;
             })
         }),

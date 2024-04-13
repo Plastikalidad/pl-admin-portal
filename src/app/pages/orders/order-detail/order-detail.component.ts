@@ -9,9 +9,10 @@ import { Discount } from '../../../shared/interfaces/discount.interface';
 import { KeyGeneratorService } from '../../../shared/utils/key-generator.service';
 import { ValidatorsService } from '../../../shared/utils/validators.service';
 import { GeneralService } from '../../../states/general.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs';
+import { Observable, forkJoin, switchMap, take, tap } from 'rxjs';
+import { or } from 'firebase/firestore';
 
 @Component({
   selector: 'app-order-detail',
@@ -33,6 +34,7 @@ export class OrderDetailComponent {
   public sizeService = inject(SizeService);
   public activatedRoute = inject(ActivatedRoute);
   public router = inject(Router);
+  public location = inject(Location);
   public code = this.activatedRoute.snapshot.params['code'];
   public date = '';
 
@@ -43,18 +45,20 @@ export class OrderDetailComponent {
   public toUpdate = false;
   public discounts: Discount[] = [];
   public viewingOnly = false;
+  public deleteOrderFirst: { key: string, code: string, quantity: number }[] = [];
 
   public ngOnInit(): void {
     this.discountService.getDiscounts().subscribe(discounts => {
       this.discounts = discounts;
     });
     this.orderService.getOrder(this.code).pipe(take(1)).subscribe(order => {
-      const products: { code: string; design: string; size: string; availableStocks: number; quantity: number; regPricePerBundle: number; qtyPerBundle: number; }[] = [];
+      const products: { key: string, code: string; design: string; size: string; availableStocks: number; quantity: number; regPricePerBundle: number; qtyPerBundle: number; }[] = [];
       Object.keys(order[0].products).forEach((key: string) => {
         products.push(order[0].products[parseInt(key)])
       });
       order[0].products = products;
       for (let product of products) {
+        this.deleteOrderFirst.push({ key: product.key, code: product.code, quantity: product.quantity })
         this.addProduct()
       }
       this.form.patchValue(order[0]);
@@ -197,8 +201,47 @@ export class OrderDetailComponent {
       return;
     }
     try {
-      await this.orderService.updateOrder(this.form.getRawValue());
-      this.generalService.toast.set({ show: true, message: 'Order successfully updated', type: 'alert-success' });
+
+      // Delete first initial products
+      const orderDeleteSubscription: Observable<any>[] = [];
+      for (let product of this.deleteOrderFirst) {
+        if (product) {
+          orderDeleteSubscription.push(this.productService.getProduct(product.code).pipe(
+            take(1),
+            tap(async (data) => {
+              const newStock = parseInt(data[0].availableStocks.toString()) + parseInt(product.quantity.toString());
+              await this.productService.updateProduct({ ...data[0], availableStocks: newStock })
+              return data;
+            })))
+        }
+      }
+
+      // Adding now all products
+      const orderSubscription: Observable<any>[] = [];
+      const products = (this.form.get('products') as FormArray).getRawValue();
+      for (let product of products) {
+        if (product) {
+          orderSubscription.push(this.productService.getProduct(product.code).pipe(
+            take(1),
+            tap(async (data) => {
+              const newStock = parseInt(data[0].availableStocks.toString()) - parseInt(product.quantity.toString());
+              await this.productService.updateProduct({ ...data[0], availableStocks: newStock })
+              return data;
+            })))
+        }
+      }
+      const subscription = forkJoin([...orderDeleteSubscription]).pipe(switchMap(() => forkJoin([...orderSubscription]))).subscribe({
+        next: async (d) => {
+          await this.orderService.updateOrder(this.form.getRawValue());
+          this.generalService.toast.set({ show: true, message: 'Order successfully updated', type: 'alert-success' });
+          this.location.back();
+          subscription.unsubscribe();
+        },
+        error: (e) => {
+          subscription.unsubscribe();
+        },
+      })
+
     } catch (e) {
     }
 

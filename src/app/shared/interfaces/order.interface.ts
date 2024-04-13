@@ -5,7 +5,7 @@ export interface Order {
   code: string;
   date: string;
   customer: Customer;
-  products: { code: string, design: string, size: string, availableStocks: number, quantity: number, regPricePerBundle: number, qtyPerBundle: number; }[];
+  products: { key: string, code: string, design: string, size: string, availableStocks: number, quantity: number, regPricePerBundle: number, qtyPerBundle: number; }[];
   totalPrice: number;
   notes: string;
   status: 'Reserved' | 'Not Packed' | 'Packed' | 'Completed' | 'Cancelled'

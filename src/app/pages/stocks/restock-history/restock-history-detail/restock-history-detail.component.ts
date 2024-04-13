@@ -8,7 +8,7 @@ import { Discount } from "../../../../shared/interfaces/discount.interface";
 import { KeyGeneratorService } from "../../../../shared/utils/key-generator.service";
 import { ValidatorsService } from "../../../../shared/utils/validators.service";
 import { GeneralService } from "../../../../states/general.service";
-import { CommonModule } from "@angular/common";
+import { CommonModule, Location } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
 
@@ -32,6 +32,7 @@ export class RestockHistoryDetailComponent implements OnInit {
   public productService = inject(ProductService);
   public sizeService = inject(SizeService);
   public activatedRoute = inject(ActivatedRoute);
+  public location = inject(Location);
   public code = this.activatedRoute.snapshot.params['code'];
   public date = '';
 
@@ -114,6 +115,7 @@ export class RestockHistoryDetailComponent implements OnInit {
     try {
 
       await this.stockService.updateRestock(this.form.getRawValue());
+      this.location.back();
       this.generalService.toast.set({ show: true, message: 'Restock successfully updated', type: 'alert-success' });
     } catch (e) {
     }

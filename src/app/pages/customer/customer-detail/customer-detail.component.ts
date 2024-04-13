@@ -9,7 +9,7 @@ import { ValidatorsService } from '../../../shared/utils/validators.service';
 import { GeneralService } from '../../../states/general.service';
 import { CustomerService } from '../../../firebase/services/customer.service';
 import { Customer } from '../../../shared/interfaces/customer.interface';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-customer-detail',
@@ -25,6 +25,7 @@ export class CustomerDetailComponent {
   public generalService = inject(GeneralService);
   public sizeService = inject(SizeService);
   public validatorsService = inject(ValidatorsService);
+  public location = inject(Location);
 
   public router = inject(Router);
   public name = this.activatedRoute.snapshot.params['code'];
@@ -58,6 +59,7 @@ export class CustomerDetailComponent {
     }
     try {
       await this.customerService.updateCustomer(this.form.getRawValue());
+      this.location.back();
       this.generalService.toast.set({ show: true, message: 'Customer successfully updated', type: 'alert-success' });
     } catch (e) {
     }
