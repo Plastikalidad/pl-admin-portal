@@ -90,6 +90,7 @@ export class OrderDetailComponent {
       modeOfDelivery: [''],
       orderedFrom: ['']
     }),
+    paidStatus: [{ value: '', disabled: true }, Validators.required],
     notes: [''],
     products: this.fb.array([]),
     totalPrice: ['', Validators.required],
@@ -110,7 +111,6 @@ export class OrderDetailComponent {
       sellingPricePer50: [{ value: '', disabled: true }, Validators.required],
       sellingPricePer100: [{ value: '', disabled: true }, Validators.required],
       sellingPricePer500: [{ value: '', disabled: true }, Validators.required],
-      paidStatus: [{ value: '', disabled: true }, Validators.required]
     })
   }
 

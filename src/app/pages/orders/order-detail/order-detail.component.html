@@ -184,15 +184,6 @@
       </div>
       <div class="card card-side bg-base-100 shadow-xl mb-5">
         <div class="card-body">
-          <h3 class="font-bold text-lg">Total Price</h3>
-          <label class="form-control w-full ">
-
-            <input formControlName="totalPrice" type="text" placeholder="" class="input input-bordered w-full " />
-          </label>
-        </div>
-      </div>
-      <div class="card card-side bg-base-100 shadow-xl mb-5">
-        <div class="card-body">
           <label class="form-control w-full ">
             <div class="label">
               <span class="label-text">Paid Status</span>
@@ -205,6 +196,16 @@
           </label>
         </div>
       </div>
+      <div class="card card-side bg-base-100 shadow-xl mb-5">
+        <div class="card-body">
+          <h3 class="font-bold text-lg">Total Price</h3>
+          <label class="form-control w-full ">
+
+            <input formControlName="totalPrice" type="text" placeholder="" class="input input-bordered w-full " />
+          </label>
+        </div>
+      </div>
+
       @if(!viewingOnly) {
       <button class="btn btn-accent" (click)="addProduct()">Add Product</button>
       }

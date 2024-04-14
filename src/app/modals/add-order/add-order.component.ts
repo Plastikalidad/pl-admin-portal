@@ -61,6 +61,7 @@ export class AddOrderComponent {
       orderedFrom: ['']
     }),
     notes: [''],
+    paidStatus: ['', Validators.required],
     products: this.fb.array([this.initializeProduct()]),
     totalPrice: ['', Validators.required],
     status: ['Reserved']
@@ -80,7 +81,6 @@ export class AddOrderComponent {
       sellingPricePer50: [{ value: '', disabled: true }, Validators.required],
       sellingPricePer100: [{ value: '', disabled: true }, Validators.required],
       sellingPricePer500: [{ value: '', disabled: true }, Validators.required],
-      paidStatus: [{ value: '', disabled: true }, Validators.required]
     })
   }
 
