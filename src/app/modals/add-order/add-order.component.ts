@@ -79,7 +79,8 @@ export class AddOrderComponent {
       totalPrice: [{ value: '', disabled: true }, Validators.required],
       sellingPricePer50: [{ value: '', disabled: true }, Validators.required],
       sellingPricePer100: [{ value: '', disabled: true }, Validators.required],
-      sellingPricePer500: [{ value: '', disabled: true }, Validators.required]
+      sellingPricePer500: [{ value: '', disabled: true }, Validators.required],
+      paidStatus: [{ value: '', disabled: true }, Validators.required]
     })
   }
 
